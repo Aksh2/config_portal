@@ -91,7 +91,7 @@ dependencies {
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.53'
     compile group: 'sshtools', name: 'j2ssh-core', version: '0.2.9'
     println '----> automation framework source'
-    compile 'com.games24x7:automation-framework:4.0'
+    compile "com.games24x7:automation-framework:${automation_framework_version}"
     
     // https://mvnrepository.com/artifact/org.mock-server/mockserver-netty
     compile group: 'org.mock-server', name: 'mockserver-netty', version: '3.9.17'
@@ -127,43 +127,54 @@ dependencies {
  }
  
  test {
- 
-     useTestNG {
-      	//set TestNG output dir
-    	 outputDirectory = file("$project.buildDir//testngOutput")
-    	
-    	//required to turn on TestNG reports
-   		 useDefaultListeners = true
-   
-   		 String typeXml = System.getProperty('typeXml')
-         suites "src/test/resources/${typeXml}"
-         listeners << 'org.testng.reporters.EmailableReporter'
-     }
+  useTestNG {
+            suites 'src/test/resources/testng.xml'
+
+	    def oDir = file('test-output')
+            if(oDir.exists()) {
+                oDir.deleteDir()
+            }
+            outputDirectory = file('test-output')
+
+         
+            if(project.hasProperty('excludeClasses')){
+                systemProperty("excludeClasses", project.property('excludeClasses'))
+            } else if(System.getProperty("excludeClasses") != null) {
+                systemProperty("excludeClasses", System.property('excludeClasses'))
+	    }
+        }
      
-      afterTest { desc, result -> 
-        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
-    }
+        afterTest { desc, result -> 
+            println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+        }
     
-    testLogging {
-        events "passed", "skipped", "failed"
-        
-    }
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
     
-    // show standard out and standard error of the test JVM(s) on the console
-    testLogging.showStandardStreams = true
+        // show standard out and standard error of the test JVM(s) on the console
+        testLogging.showStandardStreams = true
   	
-    //add system property here
-    test {
+        //add system property here
+        test {
   	
-  	systemProperty "ui.target", System.getProperty("ui.target")
-  	
-  	//if target is mobile set this environment variable
+  	    systemProperty "ui.target", System.getProperty("ui.target")
+  		systemProperty "project.name", System.getProperty("project.name")
+  	    systemProperty "pipeline.name", System.getProperty("pipeline.name")
+            //if target is mobile set this environment variable
     	systemProperty "firefox.path", System.getProperty("firefox.path")
     	systemProperty "chrome.path", System.getProperty("chrome.path")
     	systemProperty "channel", System.getProperty("channel")
-    	systemProperty "browser", System.getProperty("browser") 
-    }
-  	
+    	systemProperty "browser", System.getProperty("browser")
+        systemProperty "select_language",System.getProperty("select_language")
+	    systemProperty "incognito", System.getProperty("incognito")
+	    systemProperty "email.subject", System.getProperty("email.subject")
+	    
+	    systemProperty "enable_geolocation", System.getProperty("enable_geolocation")
+	    systemProperty "geo_latitude", System.getProperty("geo_latitude")
+	    systemProperty "geo_longitude", System.getProperty("geo_longitude")
+        }
+ 	
  }
  
 /* task generateAllureReport(type: Exec) {

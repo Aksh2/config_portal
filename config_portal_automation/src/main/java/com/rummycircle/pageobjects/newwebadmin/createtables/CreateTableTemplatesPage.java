@@ -1,4 +1,4 @@
-package com.rummycircle.pageobjects.newwebadmin;
+package com.rummycircle.pageobjects.newwebadmin.createtables;
 
 import java.util.Properties;
 
@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import com.rummycircle.AbstractBasePage;
+import com.rummycircle.Element;
 import com.rummycircle.utils.exceptions.RCException;
 
 public class CreateTableTemplatesPage extends AbstractBasePage {
@@ -16,12 +17,13 @@ public class CreateTableTemplatesPage extends AbstractBasePage {
 	protected Logger log = null;
 
 	WebDriver driver;
-
+	
 	public CreateTableTemplatesPage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		locators = loadLocators("createtable.properties");
 		log = Logger.getLogger(CreateTableTemplatesPage.class);
+		
 
 	}
 
@@ -43,9 +45,9 @@ public class CreateTableTemplatesPage extends AbstractBasePage {
 
 	public void fillServiceFee(String fee) {
 		if (cmd.isElementPresent(By.xpath(locators
-				.getProperty("input.servicefee.xpath")))) {
+				.getProperty("input.point.servicefee.xpath")))) {
 			cmd.sendKeys(
-					By.xpath(locators.getProperty("input.servicefee.xpath")),
+					By.xpath(locators.getProperty("input.point.servicefee.xpath")),
 					fee, "Filling the table template name");
 		} else {
 			throw new RCException("Service fee input field not found");
@@ -356,5 +358,10 @@ public class CreateTableTemplatesPage extends AbstractBasePage {
 			throw new RCException("Create table templates tab not found");
 		}
 	}
+	
+	public void milliSecWait(long milliSec) {
+		cmd.sleep(milliSec);
+	}
+	
 
 }

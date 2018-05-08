@@ -2,13 +2,14 @@ package com.rummycircle.login;
 
 import java.util.Properties;
 
-import org.junit.Assert;
 import org.openqa.selenium.Dimension;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.rummycircle.pageobjects.login.LoginPage;
+import com.rummycircle.ui.DriverManager;
 import com.rummycircle.utils.testutils.BaseTest;
 import com.rummycircle.utils.testutils.PropertyReader;
 
@@ -30,7 +31,7 @@ public class LoginPageTest extends BaseTest {
 
 	@Test(description = "Perform a successful login on config portal")
 	public void loginIntoPortal() {
-		LoginPage loginPage = new LoginPage(driver);
+		LoginPage loginPage = new LoginPage(DriverManager.getWebDriver().get());
 
 		loginPage.enterUsername(config.getProperty("config.portal.username"));
 		loginPage.enterPassword(config.getProperty("config.portal.password"));
@@ -53,6 +54,28 @@ public class LoginPageTest extends BaseTest {
 
 		if (username.isEmpty())
 			Assert.assertTrue(loginPage.isUsernameEmpty());
+		else if (password.isEmpty())
+			Assert.assertTrue(loginPage.isPasswordEmpty());
+		else
+			Assert.assertTrue(loginPage.isInvalidLogin());
+	}
+	
+	@Test
+	public void errorMessageOnEmptyFields(String username , String password)
+	{
+		LoginPage loginPage = new LoginPage(driver);
+
+		if (!username.isEmpty())
+			loginPage.enterUsername(username);
+
+		if (!password.isEmpty())
+			loginPage.enterPassword(password);
+
+		loginPage.clickLoginButton();
+
+		if (username.isEmpty())
+			Assert.assertTrue(loginPage.isUsernameEmpty());
+			
 		else if (password.isEmpty())
 			Assert.assertTrue(loginPage.isPasswordEmpty());
 		else

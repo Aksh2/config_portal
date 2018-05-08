@@ -17,7 +17,7 @@ import com.google.gson.JsonSyntaxException;
 
 public class Utils {
 
-    private static Logger logger = Logger.getLogger(Utils.class);
+    private static Logger logger = Logger.getLogger(Utility.class);
     
     public static Map jsonToMapConverter(String jsonData) {
 
