@@ -1,0 +1,34 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Config UI Tests" verbose="1">
+
+
+	<listeners>
+		<listener class-name="com.rummycircle.utils.reporting.RCTestListener" />
+		<listener class-name="com.rummycircle.utils.testutils.TestRunTransformer" />
+		<!-- This should be commented when executing locally <listener class-name="com.rummycircle.utils.reporting.WebDriverListener" 
+			/> -->
+	</listeners>
+
+	<test name="LoginTest" parallel="methods" thread-count="2">
+		<classes>
+			<class name="com.rummycircle.login.LoginPageTest" />
+		</classes>
+	</test>
+	<test name="KycParametersTest">
+		<classes>
+			<class name="com.rummycircle.kycparameters.KycParametersTest"></class>
+		</classes>
+	</test>
+	<test name="CreateTableTest" parallel="methods" thread-count="2">
+		<classes>
+			<class name="com.rummycircle.kycparameters.CreateTableTest"></class>
+		</classes>
+	</test>
+	<test name="BrandingTest" parallel="methods" thread-count="2">
+		<classes>
+			<class name="com.rummycircle.kycparameters.BrandingTest"></class>
+		</classes>
+	</test>
+</suite>
+ 

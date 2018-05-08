@@ -1,0 +1,6 @@
+echo 'Before killing chromedriver processes -> '$(ps -ef | grep chromedriver | wc -l)
+echo 'Before killing webdriver processes -> '$(ps -ef | grep webdriver | wc -l)
+sudo kill -9 $(ps -ef | grep 'chromedriver' | awk '{print $2}' | tr -s '\n' ' ')
+sudo kill -9 $(ps -ef | grep 'webdriver' | awk '{print $2}' | tr -s '\n' ' ')
+echo 'After killing chromedriver processes -> '$(ps -ef | grep chromedriver | wc -l)
+echo 'After killing webdriver processes -> '$(ps -ef | grep webdriver | wc -l)

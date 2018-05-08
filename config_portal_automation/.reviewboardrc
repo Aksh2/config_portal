@@ -1,0 +1,2 @@
+REVIEWBOARD_URL = "reviewboard.com"
+REPOSITORY = "config_portal_automation"

@@ -1,0 +1,42 @@
+#### Gradle and eclipse generated files ###
+###########################################
+.classpath
+.project
+target
+.settings
+.gradle
+.idea
+.cache-*
+.DS_Store
+
+### build and output directories ###
+####################################
+logs
+build
+test-output
+bin
+test-results
+screenshots
+
+### Compiled source ###
+#######################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*chromedriver*
+
+### Packages ###
+################
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
